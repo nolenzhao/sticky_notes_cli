@@ -1,0 +1,4 @@
+/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build/CMakeFiles/sticky_notes_cli.dir
+/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build/CMakeFiles/sqlite3.dir
+/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build/CMakeFiles/edit_cache.dir
+/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build/CMakeFiles/rebuild_cache.dir

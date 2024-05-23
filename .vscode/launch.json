@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+      {
+          "name": "C++ Debug with LLDB",
+          "type": "cppdbg",
+          "request": "launch",
+          "program": "${workspaceFolder}/build/sticky_notes_cli",
+          "args": ["ls"],
+          "stopAtEntry": false,
+          "cwd": "${workspaceFolder}/build",  // Change this line to set the working directory
+          "environment": [],
+          "externalConsole": false,
+          "MIMode": "lldb",
+          "setupCommands": [
+              {
+                  "description": "Enable pretty-printing for lldb",
+                  "text": "settings set target.prefer-dynamic-value run-target",
+                  "ignoreFailures": true
+              }
+          ],
+          "preLaunchTask": "CMake: build",
+          "logging": {
+              "trace": true,
+              "engineLogging": true,
+              "traceResponse": true,
+              "programOutput": true,
+              "exceptions": true
+          }
+      }
+  ]
+}
