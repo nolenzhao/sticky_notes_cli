@@ -1,15 +1,54 @@
 #include <iostream>
+#include <dirent.h>
+#include <cerrno>
+#include <sys/types.h>
 #include <vector>
 #include <fstream>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <limits.h>
 #include <sys/xattr.h>
 #include <string>
 #include <sqlite3.h>
 
 
-const std::string stickies_sqlite_db_file = "sticky_notes.db";
+const std::string stickies_sqlite_db_file = "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build/sticky_notes.db";
 const std::string stickies_sqlite_db = "sticky_notes";
+const char* STICKY_ATTRIBUTE = "user.has_sticky_note";
+
+int list_callback(void*  data, int argc, char** argv, char**azColName){
+    std::vector<std::string>* buf = static_cast<std::vector<std::string>*>(data);
+
+    // process each colum in the current row 
+    for(int i = 0; i < argc; i++){
+        if(argv[i]){
+            buf->push_back(argv[i]);
+        }
+    }
+    return 0;
+}
+int ino_callback(void*  data, int argc, char** argv, char**azColName){
+    std::vector<ino_t>* buf = static_cast<std::vector<ino_t>*>(data);
+
+    // process each colum in the current row 
+    for(int i = 0; i < argc; i++){
+        if(argv[i]){
+            buf->push_back(static_cast<ino_t>(std::stoul(argv[i])));
+        }
+    }
+    return 0;
+}
+
+
+std::string getcwd(){
+    char cwd[PATH_MAX];
+    if(getcwd(cwd, sizeof(cwd)) != NULL){
+        return std::string(cwd);
+    }
+    else{
+        return std::string("");
+    }
+}
 
 bool query_valid(int rc, sqlite3* db){
     if(rc != SQLITE_OK){
@@ -18,6 +57,7 @@ bool query_valid(int rc, sqlite3* db){
     }
     return true;
 }
+
 void display_help(){
 
     std::cout << "Usage: stickies <command>  [<args>]" << std::endl;
@@ -26,6 +66,7 @@ void display_help(){
     std::cout << "get <file-path>" << std::endl;
     std::cout << "--help" << std::endl;
 }
+
 void set_sticky_flag( const std::string &filePath, bool has_sticky_note){
 
     const char *attr_name = "user.has_sticky_note";
@@ -38,19 +79,34 @@ void set_sticky_flag( const std::string &filePath, bool has_sticky_note){
     }
 }
 
-char* get_sticky_flag(const std::string &filePath, char *attr_name, size_t attr_size){
-    char* xattr_val =  new char[attr_size];
+ino_t stickiesGetInode(std::string &filePath){
+    struct stat fileStat;
+    if(stat(filePath.c_str(), &fileStat) == -1){
+        throw(std::system_error(errno, std::generic_category(), "Failed to stat the file" + filePath));
+    }
+    return fileStat.st_ino;
+}
+bool isSticky(std::string &filePath, sqlite3* db){
+    ino_t ino_number = stickiesGetInode(filePath);
 
-    size_t xattr_return = getxattr(filePath.c_str(), attr_name, xattr_val, attr_size, 0, 0);
+    const std::string query = "SELECT DISTINCT inode FROM " + stickies_sqlite_db;
 
-    if(xattr_return == -1){
-        perror("getxattr");
-        delete[] xattr_val;
-        return nullptr;
+    char* errmsg = nullptr;
+
+    std::vector<int> buf;
+
+    int rc = sqlite3_exec(db, query.c_str(), ino_callback, &buf, &errmsg);
+
+    if(rc != SQLITE_OK){
+        std::cerr << "Error in retrieving results" << std::endl;
+        sqlite3_free(errmsg);
+        throw(std::runtime_error("Couldn't query database"));
     }
 
-    std::cout << "attribute val:" <<  xattr_val << std::endl;
-    return xattr_val;
+    bool isSticky = std::find(buf.begin(), buf.end(), ino_number) != buf.end();
+
+    return isSticky; 
+    
 }
 
 
@@ -90,9 +146,12 @@ void init_sticky_db(sqlite3* &db){
 
 void add_sticky(sqlite3* db, const std::string &filePath, std::string note){
     struct stat file_stat;
+
     if(stat(filePath.c_str(), &file_stat) == -1){
         throw std::runtime_error("File not found, could not stat\n");
     }
+
+     
     const char* sql_query = "INSERT INTO sticky_notes (inode, file_path, note, author, tags, priority) VALUES (?, ?, ?, ?, ?, ?);";
     sqlite3_stmt* stmt;
 
@@ -147,6 +206,16 @@ std::string get_sticky(const std::string &filePath, sqlite3* db){
     }
 }
 
+void edit_sticky(std::string &filePath, sqlite3* db){
+
+    if(isSticky(filePath, db)){
+        
+    }
+
+     
+
+}
+
 bool delete_sticky(const std::string &filePath, sqlite3* db){
     const std::string sql_query = "DELETE FROM " + stickies_sqlite_db + " WHERE file_path = ?";
     sqlite3_stmt *stmt;
@@ -180,18 +249,6 @@ bool delete_sticky(const std::string &filePath, sqlite3* db){
     return true;
 }
 
-int list_callback(void*  data, int argc, char** argv, char**azColName){
-    std::vector<std::string>* buf = static_cast<std::vector<std::string>*>(data);
-
-    // process each colum in the current row 
-    for(int i = 0; i < argc; i++){
-        if(argv[i]){
-            buf->push_back(argv[i]);
-        }
-    }
-    return 0;
-}
-
 void list_stickies(sqlite3* db){
 
     std::string query = "SELECT DISTINCT file_path FROM " + stickies_sqlite_db; 
@@ -210,7 +267,43 @@ void list_stickies(sqlite3* db){
     }
 }
 
+void ls_highlighted(sqlite3* db){
+    DIR* dir;
+    struct dirent* entry;
+     
+    char cwd[PATH_MAX];
+
+    if(getcwd(cwd, PATH_MAX) == NULL){
+        std::cerr << "Couldn't get the current working directory" << std::endl;
+        return;
+    }
+
+    if((dir = opendir(cwd))== NULL){
+        std::cerr << "Couldn't open the current working directory" << std::endl;
+        return;
+    }
+
+    while((entry =readdir(dir)) != NULL){
+        std::string filePath = std::string(cwd) + "/" + entry->d_name;
+        
+        if(entry->d_type == DT_REG){
+            if(isSticky(filePath, db)){
+                std::cout << "\033[33m" << entry->d_name << "\033[0m" << std::endl;
+            }
+            else{
+                std::cout << entry->d_name << std::endl;
+            }
+        }
+        else if(entry->d_type == DT_DIR){
+              if (strcmp(entry->d_name, ".") != 0 && strcmp(entry->d_name, "..") != 0) {
+                std::cout << entry->d_name << "/" << std::endl;
+            }
+        }
+    }
+    closedir(dir);
+}
 int main(int argc, char *argv[]) {
+
 
     if(argc < 2){ 
         display_help();
@@ -289,21 +382,11 @@ int main(int argc, char *argv[]) {
         }
     }
     else if(command == "ls"){
-        list_stickies(db_connection);
+        ls_highlighted(db_connection);
     }
     
-
-   /* 
-    set_sticky_flag("../example.txt", 1);
-
-    char* val;
-    char* attr_name = "user.has_sticky_note";
-    val = get_sticky_flag("../example.txt", attr_name, 1);
-    if(val != nullptr){
-        std::cout << "sticky note flag" << val << std::endl;
-        delete[] val;
+    else if(command == "all"){
+        list_stickies(db_connection);
     }
-    */
 
-    return 0;
 }
