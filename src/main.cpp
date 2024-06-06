@@ -1,71 +1,29 @@
 #include <iostream>
-#include <dirent.h>
-#include <cerrno>
+#include <sys/event.h>
 #include <sys/types.h>
-#include <vector>
-#include <fstream>
 #include <sys/stat.h>
-#include <unistd.h>
+#include <fcntl.h>
+#include <fts.h>
+#include <stdexcept>
+#include <dirent.h>
+#include <sstream> 
+#include <fstream> 
+#include <cerrno>
+#include <vector>
 #include <limits.h>
 #include <sys/xattr.h>
 #include <string>
 #include <sqlite3.h>
-
+#include "headers/utils.h"
+#include "headers/commands.h"
+#include "headers/callbacks.h"
 
 const std::string stickies_sqlite_db_file = "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build/sticky_notes.db";
 const std::string stickies_sqlite_db = "sticky_notes";
 const char* STICKY_ATTRIBUTE = "user.has_sticky_note";
 
-int list_callback(void*  data, int argc, char** argv, char**azColName){
-    std::vector<std::string>* buf = static_cast<std::vector<std::string>*>(data);
-
-    // process each colum in the current row 
-    for(int i = 0; i < argc; i++){
-        if(argv[i]){
-            buf->push_back(argv[i]);
-        }
-    }
-    return 0;
-}
-int ino_callback(void*  data, int argc, char** argv, char**azColName){
-    std::vector<ino_t>* buf = static_cast<std::vector<ino_t>*>(data);
-
-    // process each colum in the current row 
-    for(int i = 0; i < argc; i++){
-        if(argv[i]){
-            buf->push_back(static_cast<ino_t>(std::stoul(argv[i])));
-        }
-    }
-    return 0;
-}
 
 
-std::string getcwd(){
-    char cwd[PATH_MAX];
-    if(getcwd(cwd, sizeof(cwd)) != NULL){
-        return std::string(cwd);
-    }
-    else{
-        return std::string("");
-    }
-}
-
-bool query_valid(int rc, sqlite3* db){
-    if(rc != SQLITE_OK){
-        std::cerr << "Failed to prepare the statement " << sqlite3_errmsg(db) << std::endl;
-        return false;
-    }
-    return true;
-}
-
-void display_help(){
-
-    std::cout << "Usage: stickies <command>  [<args>]" << std::endl;
-    std::cout << "Commands" << std::endl;
-    std::cout << "add <file-path>" << std::endl;
-    std::cout << "get <file-path>" << std::endl;
-    std::cout << "--help" << std::endl;
-}
 
 void set_sticky_flag( const std::string &filePath, bool has_sticky_note){
 
@@ -79,13 +37,6 @@ void set_sticky_flag( const std::string &filePath, bool has_sticky_note){
     }
 }
 
-ino_t stickiesGetInode(std::string &filePath){
-    struct stat fileStat;
-    if(stat(filePath.c_str(), &fileStat) == -1){
-        throw(std::system_error(errno, std::generic_category(), "Failed to stat the file" + filePath));
-    }
-    return fileStat.st_ino;
-}
 bool isSticky(std::string &filePath, sqlite3* db){
     ino_t ino_number = stickiesGetInode(filePath);
 
@@ -144,80 +95,123 @@ void init_sticky_db(sqlite3* &db){
     }
 }
 
-void add_sticky(sqlite3* db, const std::string &filePath, std::string note){
-    struct stat file_stat;
-
-    if(stat(filePath.c_str(), &file_stat) == -1){
-        throw std::runtime_error("File not found, could not stat\n");
-    }
-
-     
-    const char* sql_query = "INSERT INTO sticky_notes (inode, file_path, note, author, tags, priority) VALUES (?, ?, ?, ?, ?, ?);";
-    sqlite3_stmt* stmt;
-
-    int rc = sqlite3_prepare_v2(db, sql_query, -1, &stmt, 0);
-
-    if(query_valid(rc, db)){
-
-        sqlite3_bind_int64(stmt, 1, file_stat.st_ino);
-        sqlite3_bind_text(stmt, 2, filePath.c_str(), -1, SQLITE_STATIC);
-        sqlite3_bind_text(stmt, 3, note.c_str(), -1, SQLITE_STATIC);
-
-        if(sqlite3_step(stmt) != SQLITE_DONE){
-            throw std::runtime_error("SQL error: " + std::string(sqlite3_errmsg(db)));
-        }
-        else{
-            std::cout << "Successfully added a note" << std::endl;
-        }
-    }
-    else{
-        throw std::runtime_error("Error adding a sticky to this file\n");
-    }
-}
-
-
-std::string get_sticky(const std::string &filePath, sqlite3* db){
-
-    std::string sqlite_query = "SELECT note FROM " + stickies_sqlite_db + " WHERE file_path = ?";
-    sqlite3_stmt* stmt;
-    
-    std::string content_buf;
-
-    int rc = sqlite3_prepare_v2(db, sqlite_query.c_str(), -1, &stmt, 0);
-
-    if(query_valid(rc, db)){ 
-        sqlite3_bind_text(stmt, 1, filePath.c_str(), -1, SQLITE_STATIC);    
-
-        rc = sqlite3_step(stmt);
-
-        if(rc == SQLITE_ROW){
-            content_buf = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
-        }
-        else{
-            throw std::runtime_error("No sticky found for the file path: " + filePath);
-        }
-        sqlite3_finalize(stmt);
-
-        return content_buf; 
-    }
-    else{
-        sqlite3_finalize(stmt);
-        throw std::runtime_error("Couldn't prepare the query: " + std::string(sqlite3_errmsg(db)));
-    }
-}
 
 void edit_sticky(std::string &filePath, sqlite3* db){
 
-    if(isSticky(filePath, db)){
-        
+    if(!isSticky(filePath, db)){
+        std::cerr << "File is not a sticky, please create the sticky first" << std::endl;         
+        throw std::runtime_error("Couldn't edit the sticky");
     }
 
-     
+    ino_t fileInode = stickiesGetInode(filePath);
 
+    std::string query = "SELECT note FROM " + stickies_sqlite_db + " WHERE inode = ?"; 
+
+    sqlite3_stmt *stmt;
+
+    int rc = sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, 0);
+
+    if(!query_valid(rc, db)){
+        std::cerr << "Query not valid" << std::endl;
+        sqlite3_finalize(stmt);
+        throw std::runtime_error("Couldn't edit the sticky");
+    }
+    
+
+    rc = sqlite3_bind_int(stmt, 1, static_cast<int>(fileInode));
+
+    if(rc != SQLITE_OK){
+        std::cerr << "Failed to bind inode to query" << std::endl;
+        sqlite3_finalize(stmt);
+        throw std::runtime_error("Couldn't edit sticky");
+    }
+
+    rc = sqlite3_step(stmt);
+
+    if(rc != SQLITE_ROW){
+        std::cerr << "Failed to retrieve the sticky" << std::endl;
+        sqlite3_finalize(stmt);
+        throw std::runtime_error("Couldn't edit sticky");
+    }
+
+
+    const char * note = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0)); 
+    std::string editingFile = "/tmp/stkn_editor.txt";
+    
+
+    std::ofstream tempFile(editingFile);
+
+    if(!tempFile){
+        std::cerr << "Failed to create an editing file" << std::endl;
+        sqlite3_finalize(stmt);
+        throw std::runtime_error("Couldn't edit the sticky");
+    }
+
+    tempFile << note << std::endl;
+    tempFile.close();
+            
+    sqlite3_finalize(stmt);
+
+    std::string fileCommand = "vim " + editingFile; 
+    system(fileCommand.c_str());
+
+    std::ifstream updatedFile(editingFile);
+
+    if(!updatedFile){
+        std::cerr << "Failed to edit the file" << std::endl;
+        throw std::runtime_error("File not edited");
+    }
+
+    std::stringstream stringStream;
+
+
+    stringStream << updatedFile.rdbuf();
+    std::string updatedString = stringStream.str();
+
+    std::string updateQuery = "UPDATE " + stickies_sqlite_db + " SET note = ? where inode = ?";
+
+    sqlite3_stmt* stmt2;
+  
+    rc = sqlite3_prepare_v2(db, updateQuery.c_str(), -1, &stmt2, 0);
+        
+    if(!query_valid(rc, db)){
+        std::cerr << "Couldn't edit the file" << std::endl;
+        sqlite3_finalize(stmt2);
+        throw std::runtime_error("Couldn't query the data bse");
+    }
+
+    rc = sqlite3_bind_text(stmt2, 1, updatedString.c_str(), -1, SQLITE_TRANSIENT);
+
+    if(rc != SQLITE_OK){
+        std::cerr << "Failed to bind text to the query" << std::endl;
+        sqlite3_finalize(stmt2);
+        throw std::runtime_error("Filed not edited");
+    }
+
+    rc = sqlite3_bind_int(stmt2, 2, static_cast<int>(fileInode));
+        
+    if(rc != SQLITE_OK){
+        std::cerr << "Failed to bind the inode to the query" << std::endl;
+        sqlite3_finalize(stmt2);
+        throw std::runtime_error("Filed not edited");
+    }
+
+    rc = sqlite3_step(stmt2);
+
+    if(rc != SQLITE_DONE){
+        std::cerr << "Failed to execute the query" << std::endl;
+        sqlite3_finalize(stmt2);
+        throw std::runtime_error("Filed not edited"); 
+    }
+    
+    sqlite3_finalize(stmt2);
 }
 
-bool delete_sticky(const std::string &filePath, sqlite3* db){
-    const std::string sql_query = "DELETE FROM " + stickies_sqlite_db + " WHERE file_path = ?";
+bool delete_sticky(std::string &filePath, sqlite3* db){
+
+    ino_t inode = stickiesGetInode(filePath);
+    
+    const std::string sql_query = "DELETE FROM " + stickies_sqlite_db + " WHERE inode = ?";
     sqlite3_stmt *stmt;
 
     int rc = sqlite3_prepare_v2(db, sql_query.c_str(), -1, &stmt, 0);
@@ -228,7 +222,7 @@ bool delete_sticky(const std::string &filePath, sqlite3* db){
         return false;
     }
 
-    sqlite3_bind_text(stmt, 1, filePath.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 1, static_cast<int>(inode));
 
     rc = sqlite3_step(stmt);
 
@@ -249,36 +243,56 @@ bool delete_sticky(const std::string &filePath, sqlite3* db){
     return true;
 }
 
+// Function to find file path by inode
+std::string findFilePathByInode(ino_t target_inode, const char* startPath = "/") {
+    char* paths[] = {const_cast<char*>(startPath), nullptr};
+    FTS* file_system = fts_open(paths, FTS_NOCHDIR | FTS_PHYSICAL, nullptr);
+
+    if (!file_system) {
+        throw std::runtime_error("fts_open failed");
+    }
+
+    FTSENT* node;
+    while ((node = fts_read(file_system)) != nullptr) {
+        if (node->fts_info & FTS_F) {
+            if (node->fts_statp->st_ino == target_inode) {
+                std::string filePath = node->fts_path;
+                fts_close(file_system);
+                return filePath;
+            }
+        }
+    }
+
+    fts_close(file_system);
+    return "File not found";
+}
+
 void list_stickies(sqlite3* db){
 
-    std::string query = "SELECT DISTINCT file_path FROM " + stickies_sqlite_db; 
+    std::string query = "SELECT DISTINCT inode FROM " + stickies_sqlite_db; 
 
     char *errmsg = nullptr; 
-    std::vector<std::string> buf; 
+    std::vector<int> buf; 
 
-    int rc = sqlite3_exec(db, query.c_str(), list_callback, &buf, &errmsg); 
+    int rc = sqlite3_exec(db, query.c_str(), ino_callback, &buf, &errmsg); 
     if(rc != SQLITE_OK){
         std::cerr << "Error in retrieving results" << std::endl;
         sqlite3_free(errmsg);
     }
 
     for(int i = 0; i < buf.size() ; i++){
-        std::cout  << buf[i] << std::endl;
+        std::string filePath = findFilePathByInode(static_cast<ino_t>(buf[i]));
+        std::cout << filePath << std::endl;
     }
 }
 
 void ls_highlighted(sqlite3* db){
     DIR* dir;
     struct dirent* entry;
-     
-    char cwd[PATH_MAX];
 
-    if(getcwd(cwd, PATH_MAX) == NULL){
-        std::cerr << "Couldn't get the current working directory" << std::endl;
-        return;
-    }
+    std::string cwd = easyGetCwd();
 
-    if((dir = opendir(cwd))== NULL){
+    if((dir = opendir(cwd.c_str()))== NULL){
         std::cerr << "Couldn't open the current working directory" << std::endl;
         return;
     }
@@ -302,6 +316,16 @@ void ls_highlighted(sqlite3* db){
     }
     closedir(dir);
 }
+ 
+
+
+
+
+
+
+
+
+
 int main(int argc, char *argv[]) {
 
 
@@ -337,8 +361,8 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
-        const std::string filePath = argv[2];
-        const std::string note = argv[3];
+        std::string filePath = argv[2];
+        std::string note = argv[3];
 
         try{
         add_sticky(db_connection, filePath , note);
@@ -354,7 +378,7 @@ int main(int argc, char *argv[]) {
             return 1;
         }
         
-        const std::string filePath = argv[2];
+        std::string filePath = argv[2];
         std::string contents;
         try{
             contents = get_sticky(filePath, db_connection);
@@ -367,13 +391,23 @@ int main(int argc, char *argv[]) {
         std::cout << contents << std::endl;
 
     }
+    else if(command == "edit"){
+        if(argc < 3){
+            std::cerr << "'edit' requires at least one additional argument" << std::endl;
+            return 1;
+        }
+
+        std::string filePath = argv[2];
+        
+        edit_sticky(filePath, db_connection);
+    }
     else if(command == "delete"){
         if(argc < 3){
             std::cerr << "'delete' requires at least one additional argument" << std::endl;
             return 1;
         }
         
-        const std::string filePath = argv[2];
+        std::string filePath = argv[2];
         if(!delete_sticky(filePath, db_connection)){
             std::cerr << "Could not delete sticky" << std::endl;
         } 

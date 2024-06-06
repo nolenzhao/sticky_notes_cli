@@ -6,7 +6,7 @@
           "type": "cppdbg",
           "request": "launch",
           "program": "${workspaceFolder}/build/sticky_notes_cli",
-          "args": ["ls-highlighted"],
+          "args": ["edit example.txt"],
           "stopAtEntry": false,
           "cwd": "${workspaceFolder}",  // Change this line to set the working directory
           "environment": [],

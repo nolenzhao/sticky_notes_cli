@@ -51,5 +51,4 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/sticky_notes_cli.dir/DependInfo.cmake"
-  "CMakeFiles/sqlite3.dir/DependInfo.cmake"
   )

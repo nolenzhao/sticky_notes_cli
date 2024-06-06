@@ -129,42 +129,125 @@ sticky_notes_cli/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/build
 .PHONY : sticky_notes_cli/fast
 
-#=============================================================================
-# Target rules for targets named sqlite3
-
-# Build rule for target.
-sqlite3: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sqlite3
-.PHONY : sqlite3
-
-# fast build rule for target.
-sqlite3/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sqlite3.dir/build.make CMakeFiles/sqlite3.dir/build
-.PHONY : sqlite3/fast
-
-sqlite/sqlite3.o: sqlite/sqlite3.c.o
-.PHONY : sqlite/sqlite3.o
+src/commands/add_sticky.o: src/commands/add_sticky.cpp.o
+.PHONY : src/commands/add_sticky.o
 
 # target to build an object file
-sqlite/sqlite3.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sqlite3.dir/build.make CMakeFiles/sqlite3.dir/sqlite/sqlite3.c.o
-.PHONY : sqlite/sqlite3.c.o
+src/commands/add_sticky.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/add_sticky.cpp.o
+.PHONY : src/commands/add_sticky.cpp.o
 
-sqlite/sqlite3.i: sqlite/sqlite3.c.i
-.PHONY : sqlite/sqlite3.i
+src/commands/add_sticky.i: src/commands/add_sticky.cpp.i
+.PHONY : src/commands/add_sticky.i
 
 # target to preprocess a source file
-sqlite/sqlite3.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sqlite3.dir/build.make CMakeFiles/sqlite3.dir/sqlite/sqlite3.c.i
-.PHONY : sqlite/sqlite3.c.i
+src/commands/add_sticky.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/add_sticky.cpp.i
+.PHONY : src/commands/add_sticky.cpp.i
 
-sqlite/sqlite3.s: sqlite/sqlite3.c.s
-.PHONY : sqlite/sqlite3.s
+src/commands/add_sticky.s: src/commands/add_sticky.cpp.s
+.PHONY : src/commands/add_sticky.s
 
 # target to generate assembly for a file
-sqlite/sqlite3.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sqlite3.dir/build.make CMakeFiles/sqlite3.dir/sqlite/sqlite3.c.s
-.PHONY : sqlite/sqlite3.c.s
+src/commands/add_sticky.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/add_sticky.cpp.s
+.PHONY : src/commands/add_sticky.cpp.s
+
+src/commands/display_help.o: src/commands/display_help.cpp.o
+.PHONY : src/commands/display_help.o
+
+# target to build an object file
+src/commands/display_help.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/display_help.cpp.o
+.PHONY : src/commands/display_help.cpp.o
+
+src/commands/display_help.i: src/commands/display_help.cpp.i
+.PHONY : src/commands/display_help.i
+
+# target to preprocess a source file
+src/commands/display_help.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/display_help.cpp.i
+.PHONY : src/commands/display_help.cpp.i
+
+src/commands/display_help.s: src/commands/display_help.cpp.s
+.PHONY : src/commands/display_help.s
+
+# target to generate assembly for a file
+src/commands/display_help.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/display_help.cpp.s
+.PHONY : src/commands/display_help.cpp.s
+
+src/commands/get_sticky.o: src/commands/get_sticky.cpp.o
+.PHONY : src/commands/get_sticky.o
+
+# target to build an object file
+src/commands/get_sticky.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/get_sticky.cpp.o
+.PHONY : src/commands/get_sticky.cpp.o
+
+src/commands/get_sticky.i: src/commands/get_sticky.cpp.i
+.PHONY : src/commands/get_sticky.i
+
+# target to preprocess a source file
+src/commands/get_sticky.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/get_sticky.cpp.i
+.PHONY : src/commands/get_sticky.cpp.i
+
+src/commands/get_sticky.s: src/commands/get_sticky.cpp.s
+.PHONY : src/commands/get_sticky.s
+
+# target to generate assembly for a file
+src/commands/get_sticky.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/get_sticky.cpp.s
+.PHONY : src/commands/get_sticky.cpp.s
+
+src/helpers/callbacks.o: src/helpers/callbacks.cpp.o
+.PHONY : src/helpers/callbacks.o
+
+# target to build an object file
+src/helpers/callbacks.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/callbacks.cpp.o
+.PHONY : src/helpers/callbacks.cpp.o
+
+src/helpers/callbacks.i: src/helpers/callbacks.cpp.i
+.PHONY : src/helpers/callbacks.i
+
+# target to preprocess a source file
+src/helpers/callbacks.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/callbacks.cpp.i
+.PHONY : src/helpers/callbacks.cpp.i
+
+src/helpers/callbacks.s: src/helpers/callbacks.cpp.s
+.PHONY : src/helpers/callbacks.s
+
+# target to generate assembly for a file
+src/helpers/callbacks.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/callbacks.cpp.s
+.PHONY : src/helpers/callbacks.cpp.s
+
+src/helpers/utils.o: src/helpers/utils.cpp.o
+.PHONY : src/helpers/utils.o
+
+# target to build an object file
+src/helpers/utils.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/utils.cpp.o
+.PHONY : src/helpers/utils.cpp.o
+
+src/helpers/utils.i: src/helpers/utils.cpp.i
+.PHONY : src/helpers/utils.i
+
+# target to preprocess a source file
+src/helpers/utils.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/utils.cpp.i
+.PHONY : src/helpers/utils.cpp.i
+
+src/helpers/utils.s: src/helpers/utils.cpp.s
+.PHONY : src/helpers/utils.s
+
+# target to generate assembly for a file
+src/helpers/utils.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/utils.cpp.s
+.PHONY : src/helpers/utils.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -198,11 +281,22 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... sqlite3"
 	@echo "... sticky_notes_cli"
-	@echo "... sqlite/sqlite3.o"
-	@echo "... sqlite/sqlite3.i"
-	@echo "... sqlite/sqlite3.s"
+	@echo "... src/commands/add_sticky.o"
+	@echo "... src/commands/add_sticky.i"
+	@echo "... src/commands/add_sticky.s"
+	@echo "... src/commands/display_help.o"
+	@echo "... src/commands/display_help.i"
+	@echo "... src/commands/display_help.s"
+	@echo "... src/commands/get_sticky.o"
+	@echo "... src/commands/get_sticky.i"
+	@echo "... src/commands/get_sticky.s"
+	@echo "... src/helpers/callbacks.o"
+	@echo "... src/helpers/callbacks.i"
+	@echo "... src/helpers/callbacks.s"
+	@echo "... src/helpers/utils.o"
+	@echo "... src/helpers/utils.i"
+	@echo "... src/helpers/utils.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

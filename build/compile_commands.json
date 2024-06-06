@@ -1,14 +1,38 @@
 [
 {
   "directory": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build",
-  "command": "/usr/bin/clang++  -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/include -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1 -o CMakeFiles/sticky_notes_cli.dir/src/main.cpp.o -c /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/main.cpp",
-  "file": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/main.cpp",
-  "output": "CMakeFiles/sticky_notes_cli.dir/src/main.cpp.o"
+  "command": "/usr/bin/clang++  -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1 -o CMakeFiles/sticky_notes_cli.dir/src/commands/add_sticky.cpp.o -c /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/commands/add_sticky.cpp",
+  "file": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/commands/add_sticky.cpp",
+  "output": "CMakeFiles/sticky_notes_cli.dir/src/commands/add_sticky.cpp.o"
 },
 {
   "directory": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build",
-  "command": "/usr/bin/clang  -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/include -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1 -o CMakeFiles/sqlite3.dir/sqlite/sqlite3.c.o -c /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite/sqlite3.c",
-  "file": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite/sqlite3.c",
-  "output": "CMakeFiles/sqlite3.dir/sqlite/sqlite3.c.o"
+  "command": "/usr/bin/clang++  -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1 -o CMakeFiles/sticky_notes_cli.dir/src/commands/display_help.cpp.o -c /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/commands/display_help.cpp",
+  "file": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/commands/display_help.cpp",
+  "output": "CMakeFiles/sticky_notes_cli.dir/src/commands/display_help.cpp.o"
+},
+{
+  "directory": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build",
+  "command": "/usr/bin/clang++  -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1 -o CMakeFiles/sticky_notes_cli.dir/src/commands/get_sticky.cpp.o -c /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/commands/get_sticky.cpp",
+  "file": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/commands/get_sticky.cpp",
+  "output": "CMakeFiles/sticky_notes_cli.dir/src/commands/get_sticky.cpp.o"
+},
+{
+  "directory": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build",
+  "command": "/usr/bin/clang++  -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1 -o CMakeFiles/sticky_notes_cli.dir/src/helpers/callbacks.cpp.o -c /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/helpers/callbacks.cpp",
+  "file": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/helpers/callbacks.cpp",
+  "output": "CMakeFiles/sticky_notes_cli.dir/src/helpers/callbacks.cpp.o"
+},
+{
+  "directory": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build",
+  "command": "/usr/bin/clang++  -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1 -o CMakeFiles/sticky_notes_cli.dir/src/helpers/utils.cpp.o -c /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/helpers/utils.cpp",
+  "file": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/helpers/utils.cpp",
+  "output": "CMakeFiles/sticky_notes_cli.dir/src/helpers/utils.cpp.o"
+},
+{
+  "directory": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build",
+  "command": "/usr/bin/clang++  -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1 -o CMakeFiles/sticky_notes_cli.dir/src/main.cpp.o -c /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/main.cpp",
+  "file": "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/main.cpp",
+  "output": "CMakeFiles/sticky_notes_cli.dir/src/main.cpp.o"
 }
 ]
