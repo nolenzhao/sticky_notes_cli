@@ -101,6 +101,11 @@
     "fstream": "cpp",
     "__split_buffer": "cpp",
     "array": "cpp",
-    "vector": "cpp"
+    "vector": "cpp",
+    "__hash_table": "cpp",
+    "__node_handle": "cpp",
+    "optional": "cpp",
+    "unordered_map": "cpp",
+    "filesystem": "cpp"
   }
 }

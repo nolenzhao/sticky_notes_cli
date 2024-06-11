@@ -828,4 +828,5 @@ CMakeFiles/sticky_notes_cli.dir/src/commands/add_sticky.cpp.o: \
   /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/usr/include/c++/v1/cstdarg \
   /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers/utils.h \
   /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite/sqlite3.h \
-  /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers/commands.h
+  /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers/commands.h \
+  /Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers/constants.h

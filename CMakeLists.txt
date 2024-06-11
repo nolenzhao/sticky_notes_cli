@@ -27,6 +27,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Include directories
 include_directories(${PROJECT_SOURCE_DIR}/src/headers)
+include_directories(${PROJECT_SOURCE_DIR}/src/commands)
+include_directories(${PROJECT_SOURCE_DIR}/src/helpers)
+include_directories(${PROJECT_SOURCE_DIR}/src/monitoring)
 include_directories(${PROJECT_SOURCE_DIR}/sqlite)
 include_directories(${SQLite3_INCLUDE_DIRS})
 

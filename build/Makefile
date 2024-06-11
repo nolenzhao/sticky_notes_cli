@@ -153,6 +153,30 @@ src/commands/add_sticky.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/add_sticky.cpp.s
 .PHONY : src/commands/add_sticky.cpp.s
 
+src/commands/delete_sticky.o: src/commands/delete_sticky.cpp.o
+.PHONY : src/commands/delete_sticky.o
+
+# target to build an object file
+src/commands/delete_sticky.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/delete_sticky.cpp.o
+.PHONY : src/commands/delete_sticky.cpp.o
+
+src/commands/delete_sticky.i: src/commands/delete_sticky.cpp.i
+.PHONY : src/commands/delete_sticky.i
+
+# target to preprocess a source file
+src/commands/delete_sticky.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/delete_sticky.cpp.i
+.PHONY : src/commands/delete_sticky.cpp.i
+
+src/commands/delete_sticky.s: src/commands/delete_sticky.cpp.s
+.PHONY : src/commands/delete_sticky.s
+
+# target to generate assembly for a file
+src/commands/delete_sticky.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/delete_sticky.cpp.s
+.PHONY : src/commands/delete_sticky.cpp.s
+
 src/commands/display_help.o: src/commands/display_help.cpp.o
 .PHONY : src/commands/display_help.o
 
@@ -176,6 +200,30 @@ src/commands/display_help.s: src/commands/display_help.cpp.s
 src/commands/display_help.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/display_help.cpp.s
 .PHONY : src/commands/display_help.cpp.s
+
+src/commands/edit_sticky.o: src/commands/edit_sticky.cpp.o
+.PHONY : src/commands/edit_sticky.o
+
+# target to build an object file
+src/commands/edit_sticky.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/edit_sticky.cpp.o
+.PHONY : src/commands/edit_sticky.cpp.o
+
+src/commands/edit_sticky.i: src/commands/edit_sticky.cpp.i
+.PHONY : src/commands/edit_sticky.i
+
+# target to preprocess a source file
+src/commands/edit_sticky.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/edit_sticky.cpp.i
+.PHONY : src/commands/edit_sticky.cpp.i
+
+src/commands/edit_sticky.s: src/commands/edit_sticky.cpp.s
+.PHONY : src/commands/edit_sticky.s
+
+# target to generate assembly for a file
+src/commands/edit_sticky.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/edit_sticky.cpp.s
+.PHONY : src/commands/edit_sticky.cpp.s
 
 src/commands/get_sticky.o: src/commands/get_sticky.cpp.o
 .PHONY : src/commands/get_sticky.o
@@ -201,6 +249,54 @@ src/commands/get_sticky.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/get_sticky.cpp.s
 .PHONY : src/commands/get_sticky.cpp.s
 
+src/commands/list_stickies.o: src/commands/list_stickies.cpp.o
+.PHONY : src/commands/list_stickies.o
+
+# target to build an object file
+src/commands/list_stickies.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/list_stickies.cpp.o
+.PHONY : src/commands/list_stickies.cpp.o
+
+src/commands/list_stickies.i: src/commands/list_stickies.cpp.i
+.PHONY : src/commands/list_stickies.i
+
+# target to preprocess a source file
+src/commands/list_stickies.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/list_stickies.cpp.i
+.PHONY : src/commands/list_stickies.cpp.i
+
+src/commands/list_stickies.s: src/commands/list_stickies.cpp.s
+.PHONY : src/commands/list_stickies.s
+
+# target to generate assembly for a file
+src/commands/list_stickies.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/list_stickies.cpp.s
+.PHONY : src/commands/list_stickies.cpp.s
+
+src/commands/ls_highlighted.o: src/commands/ls_highlighted.cpp.o
+.PHONY : src/commands/ls_highlighted.o
+
+# target to build an object file
+src/commands/ls_highlighted.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/ls_highlighted.cpp.o
+.PHONY : src/commands/ls_highlighted.cpp.o
+
+src/commands/ls_highlighted.i: src/commands/ls_highlighted.cpp.i
+.PHONY : src/commands/ls_highlighted.i
+
+# target to preprocess a source file
+src/commands/ls_highlighted.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/ls_highlighted.cpp.i
+.PHONY : src/commands/ls_highlighted.cpp.i
+
+src/commands/ls_highlighted.s: src/commands/ls_highlighted.cpp.s
+.PHONY : src/commands/ls_highlighted.s
+
+# target to generate assembly for a file
+src/commands/ls_highlighted.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/commands/ls_highlighted.cpp.s
+.PHONY : src/commands/ls_highlighted.cpp.s
+
 src/helpers/callbacks.o: src/helpers/callbacks.cpp.o
 .PHONY : src/helpers/callbacks.o
 
@@ -224,6 +320,30 @@ src/helpers/callbacks.s: src/helpers/callbacks.cpp.s
 src/helpers/callbacks.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/callbacks.cpp.s
 .PHONY : src/helpers/callbacks.cpp.s
+
+src/helpers/constants.o: src/helpers/constants.cpp.o
+.PHONY : src/helpers/constants.o
+
+# target to build an object file
+src/helpers/constants.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/constants.cpp.o
+.PHONY : src/helpers/constants.cpp.o
+
+src/helpers/constants.i: src/helpers/constants.cpp.i
+.PHONY : src/helpers/constants.i
+
+# target to preprocess a source file
+src/helpers/constants.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/constants.cpp.i
+.PHONY : src/helpers/constants.cpp.i
+
+src/helpers/constants.s: src/helpers/constants.cpp.s
+.PHONY : src/helpers/constants.s
+
+# target to generate assembly for a file
+src/helpers/constants.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/constants.cpp.s
+.PHONY : src/helpers/constants.cpp.s
 
 src/helpers/utils.o: src/helpers/utils.cpp.o
 .PHONY : src/helpers/utils.o
@@ -273,6 +393,54 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/monitoring/signals.o: src/monitoring/signals.cpp.o
+.PHONY : src/monitoring/signals.o
+
+# target to build an object file
+src/monitoring/signals.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/monitoring/signals.cpp.o
+.PHONY : src/monitoring/signals.cpp.o
+
+src/monitoring/signals.i: src/monitoring/signals.cpp.i
+.PHONY : src/monitoring/signals.i
+
+# target to preprocess a source file
+src/monitoring/signals.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/monitoring/signals.cpp.i
+.PHONY : src/monitoring/signals.cpp.i
+
+src/monitoring/signals.s: src/monitoring/signals.cpp.s
+.PHONY : src/monitoring/signals.s
+
+# target to generate assembly for a file
+src/monitoring/signals.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/monitoring/signals.cpp.s
+.PHONY : src/monitoring/signals.cpp.s
+
+src/monitoring/watcher.o: src/monitoring/watcher.cpp.o
+.PHONY : src/monitoring/watcher.o
+
+# target to build an object file
+src/monitoring/watcher.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/monitoring/watcher.cpp.o
+.PHONY : src/monitoring/watcher.cpp.o
+
+src/monitoring/watcher.i: src/monitoring/watcher.cpp.i
+.PHONY : src/monitoring/watcher.i
+
+# target to preprocess a source file
+src/monitoring/watcher.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/monitoring/watcher.cpp.i
+.PHONY : src/monitoring/watcher.cpp.i
+
+src/monitoring/watcher.s: src/monitoring/watcher.cpp.s
+.PHONY : src/monitoring/watcher.s
+
+# target to generate assembly for a file
+src/monitoring/watcher.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/monitoring/watcher.cpp.s
+.PHONY : src/monitoring/watcher.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -285,21 +453,42 @@ help:
 	@echo "... src/commands/add_sticky.o"
 	@echo "... src/commands/add_sticky.i"
 	@echo "... src/commands/add_sticky.s"
+	@echo "... src/commands/delete_sticky.o"
+	@echo "... src/commands/delete_sticky.i"
+	@echo "... src/commands/delete_sticky.s"
 	@echo "... src/commands/display_help.o"
 	@echo "... src/commands/display_help.i"
 	@echo "... src/commands/display_help.s"
+	@echo "... src/commands/edit_sticky.o"
+	@echo "... src/commands/edit_sticky.i"
+	@echo "... src/commands/edit_sticky.s"
 	@echo "... src/commands/get_sticky.o"
 	@echo "... src/commands/get_sticky.i"
 	@echo "... src/commands/get_sticky.s"
+	@echo "... src/commands/list_stickies.o"
+	@echo "... src/commands/list_stickies.i"
+	@echo "... src/commands/list_stickies.s"
+	@echo "... src/commands/ls_highlighted.o"
+	@echo "... src/commands/ls_highlighted.i"
+	@echo "... src/commands/ls_highlighted.s"
 	@echo "... src/helpers/callbacks.o"
 	@echo "... src/helpers/callbacks.i"
 	@echo "... src/helpers/callbacks.s"
+	@echo "... src/helpers/constants.o"
+	@echo "... src/helpers/constants.i"
+	@echo "... src/helpers/constants.s"
 	@echo "... src/helpers/utils.o"
 	@echo "... src/helpers/utils.i"
 	@echo "... src/helpers/utils.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/monitoring/signals.o"
+	@echo "... src/monitoring/signals.i"
+	@echo "... src/monitoring/signals.s"
+	@echo "... src/monitoring/watcher.o"
+	@echo "... src/monitoring/watcher.i"
+	@echo "... src/monitoring/watcher.s"
 .PHONY : help
 
 
