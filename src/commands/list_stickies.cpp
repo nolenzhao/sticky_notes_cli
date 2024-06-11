@@ -24,3 +24,5 @@ void list_stickies(sqlite3* db){
         std::cout << filePath << std::endl;
     }
 }
+
+

@@ -1,16 +1,17 @@
 #include "constants.h"
 #include "callbacks.h"
 #include "watcher.h"
+#include "globals.h"
 #include <CoreServices/CoreServices.h>
 #include <unordered_map>
 
-void startFileWatcher(sqlite3* db, std::unordered_map<uint64_t, std::string> &inodeToFileMap, FSEventStreamRef & stream){
+void startFileWatcher(){
 
     sqlite3_stmt* stmt;
 
     std::string query = "SELECT inode, file_path FROM " + STICKIES_SQLITE_DB;
 
-    sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, NULL);
+    sqlite3_prepare_v2(db_connection, query.c_str(), -1, &stmt, NULL);
 
     while(sqlite3_step(stmt) == SQLITE_ROW){
         uint64_t inode = sqlite3_column_int64(stmt, 0);
@@ -41,6 +42,23 @@ void startFileWatcher(sqlite3* db, std::unordered_map<uint64_t, std::string> &in
                                 latency,
                                 kFSEventStreamCreateFlagFileEvents | kFSEventStreamCreateFlagUseCFTypes);
 
+
+    runLoop = CFRunLoopGetCurrent();
+
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    FSEventStreamSetDispatchQueue(stream, queue);
+
+     // Start the stream
+    FSEventStreamStart(stream);
+
+    // Run the loop
+    CFRunLoopRun();
+
+    // Clean up
+    FSEventStreamStop(stream);
+    FSEventStreamInvalidate(stream);
+    FSEventStreamRelease(stream);
+    CFRelease(pathsToWatch);
 
 
 }

@@ -3,6 +3,6 @@
 
 #include <sqlite3.h>
 
-void startFileWatcher(sqlite3* db);
+void startFileWatcher();
 
 #endif

@@ -16,7 +16,7 @@ void ls_highlighted(sqlite3* db){
     }
 
     while((entry =readdir(dir)) != NULL){
-        std::string filePath = std::string(cwd) + "/" + entry->d_name;
+        const std::string filePath = std::string(cwd) + "/" + entry->d_name;
         
         if(entry->d_type == DT_REG){
             if(isSticky(filePath, db)){

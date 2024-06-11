@@ -8,7 +8,6 @@
 #include "constants.h"
 #include <fts.h>
 
-const std::string STICKIES_SQLITE_DB = "sticky_notes";
 
 
 void init_sticky_db(sqlite3* &db){
@@ -18,8 +17,6 @@ void init_sticky_db(sqlite3* &db){
         std::cerr << "can't open the database: " << sqlite3_errmsg(db) << std::endl;
         return;
     }
-
-    // SQL statement to create the table if it does not exist
 
     std::string create_table_sql = "CREATE TABLE IF NOT EXISTS "  + STICKIES_SQLITE_DB + " ("
                                    "id INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -65,7 +62,7 @@ bool query_valid(int rc, sqlite3* db){
 }
 
 
-ino_t stickiesGetInode(std::string &filePath){
+ino_t stickiesGetInode(const std::string &filePath){
     struct stat fileStat;
     if(stat(filePath.c_str(), &fileStat) == -1){
         throw(std::system_error(errno, std::generic_category(), "Failed to stat the file" + filePath));
@@ -74,7 +71,7 @@ ino_t stickiesGetInode(std::string &filePath){
 }
 
 
-bool isSticky(std::string &filePath, sqlite3* db){
+bool isSticky(const std::string &filePath, sqlite3* db){
     ino_t ino_number = stickiesGetInode(filePath);
 
     const std::string query = "SELECT DISTINCT inode FROM " + STICKIES_SQLITE_DB;
@@ -142,7 +139,7 @@ void updateFilePathChanges(sqlite3* &db, ino_t inode, const std::string &newFile
 
     std::string query = "UPDATE " + STICKIES_SQLITE_DB + " SET file_path = '" + newFilePath + "' WHERE inode = " + std::to_string(inode) + ";";
 
-    int rc = sqlite3_exec(db, query.c_str(), 0, 0, &errmsg);
+    rc = sqlite3_exec(db, query.c_str(), 0, 0, &errmsg);
 
     if(rc != SQLITE_OK){
         std::cerr << "Unable to execute the query" << std::endl;

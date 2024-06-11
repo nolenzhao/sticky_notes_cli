@@ -345,6 +345,30 @@ src/helpers/constants.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/constants.cpp.s
 .PHONY : src/helpers/constants.cpp.s
 
+src/helpers/globals.o: src/helpers/globals.cpp.o
+.PHONY : src/helpers/globals.o
+
+# target to build an object file
+src/helpers/globals.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/globals.cpp.o
+.PHONY : src/helpers/globals.cpp.o
+
+src/helpers/globals.i: src/helpers/globals.cpp.i
+.PHONY : src/helpers/globals.i
+
+# target to preprocess a source file
+src/helpers/globals.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/globals.cpp.i
+.PHONY : src/helpers/globals.cpp.i
+
+src/helpers/globals.s: src/helpers/globals.cpp.s
+.PHONY : src/helpers/globals.s
+
+# target to generate assembly for a file
+src/helpers/globals.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sticky_notes_cli.dir/build.make CMakeFiles/sticky_notes_cli.dir/src/helpers/globals.cpp.s
+.PHONY : src/helpers/globals.cpp.s
+
 src/helpers/utils.o: src/helpers/utils.cpp.o
 .PHONY : src/helpers/utils.o
 
@@ -477,6 +501,9 @@ help:
 	@echo "... src/helpers/constants.o"
 	@echo "... src/helpers/constants.i"
 	@echo "... src/helpers/constants.s"
+	@echo "... src/helpers/globals.o"
+	@echo "... src/helpers/globals.i"
+	@echo "... src/helpers/globals.s"
 	@echo "... src/helpers/utils.o"
 	@echo "... src/helpers/utils.i"
 	@echo "... src/helpers/utils.s"

@@ -26,49 +26,43 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 40,
+				"line" : 21,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 44,
+				"line" : 25,
 				"parent" : 0
 			},
 			{
 				"command" : 1,
 				"file" : 0,
-				"line" : 45,
+				"line" : 26,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 29,
+				"line" : 11,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 30,
+				"line" : 12,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 31,
+				"line" : 13,
 				"parent" : 0
 			},
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 32,
-				"parent" : 0
-			},
-			{
-				"command" : 2,
-				"file" : 0,
-				"line" : 33,
+				"line" : 14,
 				"parent" : 0
 			}
 		]
@@ -80,6 +74,15 @@
 			[
 				{
 					"fragment" : "-g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1"
+				}
+			],
+			"frameworks" : 
+			[
+				{
+					"path" : "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/Library/Frameworks/CoreFoundation.framework"
+				},
+				{
+					"path" : "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/Library/Frameworks/CoreServices.framework"
 				}
 			],
 			"includes" : 
@@ -98,10 +101,6 @@
 				},
 				{
 					"backtrace" : 7,
-					"path" : "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/monitoring"
-				},
-				{
-					"backtrace" : 8,
 					"path" : "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite"
 				}
 			],
@@ -128,7 +127,8 @@
 				9,
 				10,
 				11,
-				12
+				12,
+				13
 			]
 		}
 	],
@@ -153,6 +153,14 @@
 			{
 				"backtrace" : 3,
 				"fragment" : "-lsqlite3",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework CoreFoundation",
+				"role" : "libraries"
+			},
+			{
+				"fragment" : "-framework CoreServices",
 				"role" : "libraries"
 			}
 		],
@@ -183,7 +191,8 @@
 				9,
 				10,
 				11,
-				12
+				12,
+				13
 			]
 		}
 	],
@@ -241,6 +250,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/helpers/constants.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/helpers/globals.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

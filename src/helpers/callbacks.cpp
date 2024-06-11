@@ -5,6 +5,7 @@
 #include "constants.h"
 #include "callbacks.h"
 #include "utils.h"
+#include "globals.h"
 
 
 int list_callback(void*  data, int argc, char** argv, char**azColName){
@@ -60,6 +61,7 @@ void fileMonitorCallback(ConstFSEventStreamRef streamRef, void *clientCallBackIn
                         sqlite3_step(stmt);
                         sqlite3_finalize(stmt);
 
+                        inodeToFileMap[inode] = paths[i];
                     }
 
                 }

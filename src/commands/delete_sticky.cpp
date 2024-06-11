@@ -3,10 +3,11 @@
 #include <sys/stat.h>
 #include "commands.h"
 #include "constants.h"
+#include "globals.h"
 #include "utils.h"
 
 
-void delete_sticky(sqlite3* db, std::string &filePath){
+void delete_sticky(sqlite3* db, const std::string &filePath){
 
     ino_t inode = stickiesGetInode(filePath);
     
@@ -38,4 +39,6 @@ void delete_sticky(sqlite3* db, std::string &filePath){
         std::cerr << "No sticky found for the file path: " << filePath << std::endl;
         throw std::runtime_error("Failed to delete sticky");
     }  
+    // Remove the filePath from the inode 
+    inodeToFileMap[static_cast<uint64_t>(inode)] = filePath; 
 }

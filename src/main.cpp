@@ -4,40 +4,32 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdexcept>
-#include <dirent.h>
 #include <sstream> 
 #include <fstream> 
 #include <cerrno>
 #include <vector>
 #include <limits.h>
-#include <sys/xattr.h>
 #include <string>
 #include <sqlite3.h>
 #include <CoreServices/CoreServices.h>
 #include <unordered_map>
+#include <thread>
 #include "headers/utils.h"
 #include "headers/commands.h"
 #include "headers/constants.h"
 #include "headers/callbacks.h"
 #include "headers/signals.h"
-
-const std::string stickies_sqlite_db_file = "/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/build/sticky_notes.db";
-const std::string stickies_sqlite_db = "sticky_notes";
-const char* STICKY_ATTRIBUTE = "user.has_sticky_note";
-FSEventStreamRef stream; 
-CFRunLoopRef runLoop;
-std::atomic<bool> keepRunning(true);
-std::unordered_map<uint64_t, std::string> inodeToFileMap;
-
-
-
-
-
-
+#include "headers/watcher.h"
+#include "headers/globals.h"
 
  
 
 int main(int argc, char *argv[]) {
+
+    signal(SIGINT, signalHandler);
+    signal(SIGTERM, signalHandler);
+
+
 
 
     if(argc < 2){ 
@@ -46,13 +38,13 @@ int main(int argc, char *argv[]) {
     }
     std::string command = argv[1];
 
-    if(!database_exists(stickies_sqlite_db_file)){
+    if(!database_exists(STICKIES_SQLITE_DB_FILE)){
         std::cout << "Database does not exist. Initializing SQLite database." << std::endl;
         init_sticky_db(db_connection);
     }
     else{
         // Open the existing db
-        int rc = sqlite3_open(stickies_sqlite_db_file.c_str(), &db_connection);
+        int rc = sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db_connection);
 
         if(rc){
             std::cerr << "Can't open this database: " << sqlite3_errmsg(db_connection) << std::endl;
@@ -60,7 +52,11 @@ int main(int argc, char *argv[]) {
         } 
     }
 
-    
+
+    std::thread watcherThread(startFileWatcher);
+    watcherThread.detach();
+
+
     if(command == "--help" || command == "-h"){
         display_help();
     }
@@ -128,4 +124,14 @@ int main(int argc, char *argv[]) {
     else{
         std::cerr << "Not a valid command, see --help for more details";
     }
+
+
+    while(keepRunning){
+          std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
+
+
+
+    sqlite3_close(db_connection);
+    return 0;
 }

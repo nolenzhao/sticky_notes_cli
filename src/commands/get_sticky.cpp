@@ -4,7 +4,7 @@
 
 const std::string STICKIES_SQLITE_DB = "sticky_notes";
 
-std::string get_sticky(std::string &filePath, sqlite3* db){
+std::string get_sticky(const std::string &filePath, sqlite3* db){
 
     ino_t inode = stickiesGetInode(filePath);
 

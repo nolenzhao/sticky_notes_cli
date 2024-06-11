@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/clang++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/commands -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/helpers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/monitoring -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite
+CXX_INCLUDES = -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/headers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/commands -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/src/helpers -I/Users/nolenzhao/Desktop/Coding-Projects/sticky_notes_cli/sqlite -F/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/Library/Frameworks
 
 CXX_FLAGSarm64 = -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -mmacosx-version-min=14.1
 

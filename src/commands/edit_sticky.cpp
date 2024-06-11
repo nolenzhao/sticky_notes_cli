@@ -4,7 +4,7 @@
 #include "commands.h"
 #include "utils.h"
 #include "constants.h"
-void edit_sticky(sqlite3* db, std::string &filePath){
+void edit_sticky(sqlite3* db, const std::string &filePath){
 
     if(!isSticky(filePath, db)){
         std::cerr << "File is not a sticky, please create the sticky first" << std::endl;         

@@ -1138,6 +1138,30 @@
 			"value" : "FALSE"
 		},
 		{
+			"name" : "COREFOUNDATION_LIBRARY",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Path to a library."
+				}
+			],
+			"type" : "FILEPATH",
+			"value" : "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/Library/Frameworks/CoreFoundation.framework"
+		},
+		{
+			"name" : "CORESERVICES_LIBRARY",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Path to a library."
+				}
+			],
+			"type" : "FILEPATH",
+			"value" : "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/System/Library/Frameworks/CoreServices.framework"
+		},
+		{
 			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_SQLite3",
 			"properties" : 
 			[

@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "commands.h"
 #include "constants.h"
+#include "globals.h"
 
 void add_sticky(sqlite3* db, std::string &filePath, std::string note){
     struct stat file_stat;
@@ -30,6 +31,7 @@ void add_sticky(sqlite3* db, std::string &filePath, std::string note){
         }
         else{
             std::cout << "Successfully added a note" << std::endl;
+            inodeToFileMap[file_stat.st_ino] = filePath;
         }
     }
     else{

@@ -8,15 +8,15 @@
 std::string easyGetCwd();
 
 
-void init_sticky_db(sqlite3* db);
+void init_sticky_db(sqlite3* &db);
 
 bool database_exists(const std::string &db_name);
 
 bool query_valid(int rc, sqlite3* db);
 
-ino_t stickiesGetInode(std::string &filePath);
+ino_t stickiesGetInode(const std::string &filePath);
 
-bool isSticky(std::string &filePath, sqlite3* db);
+bool isSticky(const std::string &filePath, sqlite3* db);
 
 std::string getAbsolutePath(std::string &relativePath);
 

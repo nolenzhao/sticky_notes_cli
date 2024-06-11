@@ -17,6 +17,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/sticky_notes_cli.dir/src/helpers/callbacks.cpp.o.d"
   "CMakeFiles/sticky_notes_cli.dir/src/helpers/constants.cpp.o"
   "CMakeFiles/sticky_notes_cli.dir/src/helpers/constants.cpp.o.d"
+  "CMakeFiles/sticky_notes_cli.dir/src/helpers/globals.cpp.o"
+  "CMakeFiles/sticky_notes_cli.dir/src/helpers/globals.cpp.o.d"
   "CMakeFiles/sticky_notes_cli.dir/src/helpers/utils.cpp.o"
   "CMakeFiles/sticky_notes_cli.dir/src/helpers/utils.cpp.o.d"
   "CMakeFiles/sticky_notes_cli.dir/src/main.cpp.o"
