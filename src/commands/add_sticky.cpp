@@ -2,6 +2,7 @@
 #include <iostream>
 #include "utils.h"
 #include "commands.h"
+#include "constants.h"
 
 void add_sticky(sqlite3* db, std::string &filePath, std::string note){
     struct stat file_stat;
@@ -11,15 +12,17 @@ void add_sticky(sqlite3* db, std::string &filePath, std::string note){
     }
 
      
-    const char* sql_query = "INSERT INTO sticky_notes (inode, file_path, note, author, tags, priority) VALUES (?, ?, ?, ?, ?, ?);";
-    sqlite3_stmt* stmt;
+    const std::string query = "INSERT INTO " + STICKIES_SQLITE_DB + " (inode, file_path, note, author, tags, priority) VALUES (?, ?, ?, ?, ?, ?);";
 
-    int rc = sqlite3_prepare_v2(db, sql_query, -1, &stmt, 0);
+    sqlite3_stmt* stmt;
+    std::string absoluteFilePath = getAbsolutePath(filePath);
+
+    int rc = sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, 0);
 
     if(query_valid(rc, db)){
 
         sqlite3_bind_int64(stmt, 1, file_stat.st_ino);
-        sqlite3_bind_text(stmt, 2, filePath.c_str(), -1, SQLITE_STATIC);
+        sqlite3_bind_text(stmt, 2, absoluteFilePath.c_str(), -1, SQLITE_STATIC);
         sqlite3_bind_text(stmt, 3, note.c_str(), -1, SQLITE_STATIC);
 
         if(sqlite3_step(stmt) != SQLITE_DONE){
