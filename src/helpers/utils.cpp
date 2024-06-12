@@ -72,6 +72,8 @@ ino_t stickiesGetInode(const std::string &filePath){
 
 
 bool isSticky(const std::string &filePath, sqlite3* db){
+
+    sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db);
     ino_t ino_number = stickiesGetInode(filePath);
 
     const std::string query = "SELECT DISTINCT inode FROM " + STICKIES_SQLITE_DB;
@@ -83,8 +85,9 @@ bool isSticky(const std::string &filePath, sqlite3* db){
     int rc = sqlite3_exec(db, query.c_str(), ino_callback, &buf, &errmsg);
 
     if(rc != SQLITE_OK){
-        std::cerr << "Error in retrieving results" << std::endl;
+        std::cerr << "Error in retrieving results for isSticky" << std::endl;
         sqlite3_free(errmsg);
+        sqlite3_close(db);
         throw(std::runtime_error("Couldn't query database"));
     }
 
@@ -147,5 +150,27 @@ void updateFilePathChanges(sqlite3* &db, ino_t inode, const std::string &newFile
         throw std::runtime_error("Unable to update file path in database");
     }
 
-    sqlite3_close(db);
+}
+
+
+bool isDbConnectionOpen(sqlite3* db){
+    if (!db){
+        return false;
+    }
+
+    const std::string query = "SELECT 1";
+    sqlite3_stmt* stmt;
+
+    int rc = sqlite3_prepare_v2(db, query.c_str(), -1, &stmt, nullptr);
+
+    if(rc != SQLITE_OK){
+        return false;
+    }
+
+
+    rc = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+
+    return rc == SQLITE_ROW || rc == SQLITE_DONE;
+
 }

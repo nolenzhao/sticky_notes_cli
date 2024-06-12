@@ -2,9 +2,12 @@
 #include <dirent.h>
 #include "utils.h"
 #include "commands.h"
-
+#include "constants.h"
 
 void ls_highlighted(sqlite3* db){
+
+    sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db);
+
     DIR* dir;
     struct dirent* entry;
 
@@ -12,7 +15,8 @@ void ls_highlighted(sqlite3* db){
 
     if((dir = opendir(cwd.c_str()))== NULL){
         std::cerr << "Couldn't open the current working directory" << std::endl;
-        return;
+        sqlite3_close(db);
+        throw std::runtime_error("ls_highlighted broken");
     }
 
     while((entry =readdir(dir)) != NULL){
@@ -37,5 +41,6 @@ void ls_highlighted(sqlite3* db){
             }
         }
     }
+    sqlite3_close(db);
     closedir(dir);
 }

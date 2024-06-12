@@ -106,6 +106,8 @@
     "__node_handle": "cpp",
     "optional": "cpp",
     "unordered_map": "cpp",
-    "filesystem": "cpp"
+    "filesystem": "cpp",
+    "charconv": "cpp",
+    "csignal": "cpp"
   }
 }

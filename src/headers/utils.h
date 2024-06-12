@@ -24,5 +24,6 @@ std::string findFilePathByInode(ino_t target_inode, const char* startPath = "/")
 
 void updateFilePathChanges(sqlite3* db, ino_t inode, const std::string &newFilePath);
 
+bool isDbConnectionOpen(sqlite3* db);
 
 #endif

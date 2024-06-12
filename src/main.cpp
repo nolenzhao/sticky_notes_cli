@@ -31,6 +31,14 @@ int main(int argc, char *argv[]) {
 
 
 
+    if(!isDbConnectionOpen(db_connection)){
+        int rc = sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db_connection);
+        if(rc != SQLITE_OK){
+            std::cerr << "Cant open the db" << std::endl;
+            return rc;
+        }
+    }
+
 
     if(argc < 2){ 
         display_help();
@@ -40,12 +48,24 @@ int main(int argc, char *argv[]) {
 
     if(!database_exists(STICKIES_SQLITE_DB_FILE)){
         std::cout << "Database does not exist. Initializing SQLite database." << std::endl;
-        init_sticky_db(db_connection);
+        try{
+            init_sticky_db(db_connection);
+        }
+        catch(std::runtime_error e){
+            std::cerr << "Caught an exception" << e.what() << std::endl;
+            return 1;
+        }
     }
     else{
         // Open the existing db
-        int rc = sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db_connection);
-
+        int rc;
+        try{
+            rc = sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db_connection);
+        }
+        catch(std::runtime_error &e){
+            std::cerr << "Caught an exception" << e.what() << std::endl;
+            return 1;
+        }
         if(rc){
             std::cerr << "Can't open this database: " << sqlite3_errmsg(db_connection) << std::endl;
             return 1;
@@ -71,7 +91,7 @@ int main(int argc, char *argv[]) {
         std::string note = argv[3];
 
         try{
-        add_sticky(db_connection, filePath , note);
+            add_sticky(db_connection, filePath , note);
         }
         catch(std::runtime_error &e){
             std::cerr << "Error: " << e.what() << std::endl;
@@ -105,7 +125,13 @@ int main(int argc, char *argv[]) {
 
         std::string filePath = argv[2];
         
-        edit_sticky(db_connection, filePath);
+        try{
+            edit_sticky(db_connection, filePath);
+        }
+        catch(std::runtime_error &e){
+            std::cerr << "Error: " << e.what() << std::endl;
+            return 1;
+        }
     }
     else if(command == "delete"){
         if(argc < 3){
@@ -113,13 +139,30 @@ int main(int argc, char *argv[]) {
             return 1;
         } 
         std::string filePath = argv[2];
-        delete_sticky(db_connection, filePath);
+        try{
+            delete_sticky(db_connection, filePath);
+        }
+        catch(std::runtime_error &e){
+            std::cerr << "Error: " << e.what() << std::endl;
+        }
     }
     else if(command == "ls"){
-        ls_highlighted(db_connection);
+        try{
+            ls_highlighted(db_connection);
+        }
+        catch(std::runtime_error &e){
+            std::cerr << "Error :" << e.what() << std::endl;
+        }
     }    
     else if(command == "all"){
-        list_stickies(db_connection);
+
+        try{
+            list_stickies(db_connection);
+        }
+        catch(std::runtime_error &e){
+            std::cerr << "Error :" << e.what() << std::endl;
+        }
+
     }
     else{
         std::cerr << "Not a valid command, see --help for more details";
@@ -132,6 +175,5 @@ int main(int argc, char *argv[]) {
 
 
 
-    sqlite3_close(db_connection);
     return 0;
 }

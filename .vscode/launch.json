@@ -6,7 +6,7 @@
           "type": "cppdbg",
           "request": "launch",
           "program": "${workspaceFolder}/build/sticky_notes_cli",
-          "args": ["edit example.txt"],
+          "args": ["ls"],
           "stopAtEntry": false,
           "cwd": "${workspaceFolder}",  // Change this line to set the working directory
           "environment": [],
@@ -21,10 +21,10 @@
           ],
           "preLaunchTask": "CMake: build",
           "logging": {
-              "trace": true,
-              "engineLogging": true,
-              "traceResponse": true,
-              "programOutput": true,
+              "trace": false,
+              "engineLogging": false,
+              "traceResponse": false,
+              "programOutput": false,
               "exceptions": true
           }
       }
