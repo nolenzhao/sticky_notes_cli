@@ -93,7 +93,7 @@ bool isSticky(const std::string &filePath, sqlite3* db){
 
     bool isSticky = std::find(buf.begin(), buf.end(), ino_number) != buf.end();
 
-    return isSticky; 
+    return isSticky;
     
 }
 

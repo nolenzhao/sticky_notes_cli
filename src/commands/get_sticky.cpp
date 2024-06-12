@@ -1,10 +1,12 @@
 #include <sys/stat.h>
 #include "commands.h"
 #include "utils.h"
+#include "constants.h"
 
-const std::string STICKIES_SQLITE_DB = "sticky_notes";
 
 std::string get_sticky(const std::string &filePath, sqlite3* db){
+
+    sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db);
 
     ino_t inode = stickiesGetInode(filePath);
 
@@ -25,16 +27,17 @@ std::string get_sticky(const std::string &filePath, sqlite3* db){
         if(rc == SQLITE_ROW){
             content_buf = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
         }
-
         else{
+            sqlite3_close(db);
             throw std::runtime_error("No sticky found for the file path: " + filePath);
         }
         sqlite3_finalize(stmt);
-
+        sqlite3_close(db);
         return content_buf; 
     }
     else{
         sqlite3_finalize(stmt);
+        sqlite3_close(db);
         throw std::runtime_error("Couldn't prepare the query: " + std::string(sqlite3_errmsg(db)));
     }
 }
