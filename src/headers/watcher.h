@@ -5,4 +5,6 @@
 
 void startFileWatcher();
 
+void fillMap(sqlite3* db);
+
 #endif

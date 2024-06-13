@@ -6,6 +6,7 @@
 #include "utils.h"
 #include "callbacks.h"
 #include "constants.h"
+#include "globals.h"
 #include <fts.h>
 
 
@@ -85,7 +86,7 @@ bool isSticky(const std::string &filePath, sqlite3* db){
     int rc = sqlite3_exec(db, query.c_str(), ino_callback, &buf, &errmsg);
 
     if(rc != SQLITE_OK){
-        std::cerr << "Error in retrieving results for isSticky" << std::endl;
+        std::cerr << "Error in retrieving results" << std::endl;
         sqlite3_free(errmsg);
         sqlite3_close(db);
         throw(std::runtime_error("Couldn't query database"));
@@ -98,7 +99,7 @@ bool isSticky(const std::string &filePath, sqlite3* db){
 }
 
 
-std::string getAbsolutePath(std::string& relativePath) {
+std::string getAbsolutePath(const std::string& relativePath) {
     char absolutePath[PATH_MAX];
     if (realpath(relativePath.c_str(), absolutePath) == NULL) {
         std::cerr << "Error resolving the absolute path" << std::endl;
@@ -173,4 +174,16 @@ bool isDbConnectionOpen(sqlite3* db){
 
     return rc == SQLITE_ROW || rc == SQLITE_DONE;
 
+}
+
+    
+bool mapContainsFile(const std::string &filePath){
+
+    std::string absolutePath = getAbsolutePath(filePath);
+    for(auto it = inodeToFileMap.begin(); it != inodeToFileMap.end(); it++){
+        if(it->second == absolutePath){
+            return true;
+        }
+    }
+    return false;
 }

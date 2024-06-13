@@ -18,7 +18,7 @@ ino_t stickiesGetInode(const std::string &filePath);
 
 bool isSticky(const std::string &filePath, sqlite3* db);
 
-std::string getAbsolutePath(std::string &relativePath);
+std::string getAbsolutePath(const std::string &relativePath);
 
 std::string findFilePathByInode(ino_t target_inode, const char* startPath = "/");
 
@@ -26,4 +26,6 @@ void updateFilePathChanges(sqlite3* db, ino_t inode, const std::string &newFileP
 
 bool isDbConnectionOpen(sqlite3* db);
 
+bool mapContainsFile(const std::string &filePath);
+    
 #endif

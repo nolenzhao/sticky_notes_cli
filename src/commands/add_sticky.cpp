@@ -5,8 +5,9 @@
 #include "constants.h"
 #include "globals.h"
 
-void add_sticky(sqlite3* db, std::string &filePath, std::string note){
+void add_sticky(sqlite3* db, const std::string &filePath, std::string note){
 
+    
     sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db);
 
     struct stat file_stat;
@@ -30,6 +31,7 @@ void add_sticky(sqlite3* db, std::string &filePath, std::string note){
         sqlite3_bind_text(stmt, 3, note.c_str(), -1, SQLITE_STATIC);
 
         if(sqlite3_step(stmt) != SQLITE_DONE){
+            sqlite3_finalize(stmt);
             sqlite3_close(db);
             throw std::runtime_error("SQL error: " + std::string(sqlite3_errmsg(db)));
         }

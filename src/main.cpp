@@ -29,15 +29,16 @@ int main(int argc, char *argv[]) {
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
 
+    fillMap(db_connection);
 
 
-    if(!isDbConnectionOpen(db_connection)){
-        int rc = sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db_connection);
-        if(rc != SQLITE_OK){
-            std::cerr << "Cant open the db" << std::endl;
-            return rc;
-        }
-    }
+    // if(!isDbConnectionOpen(db_connection)){
+    //     int rc = sqlite3_open(STICKIES_SQLITE_DB_FILE.c_str(), &db_connection);
+    //     if(rc != SQLITE_OK){
+    //         std::cerr << "Cant open the db" << std::endl;
+    //         return rc;
+    //     }
+    // }
 
 
     if(argc < 2){ 
@@ -87,8 +88,13 @@ int main(int argc, char *argv[]) {
             return 1;
         }
 
-        std::string filePath = argv[2];
+        const std::string filePath = argv[2];
         std::string note = argv[3];
+
+        if(mapContainsFile(filePath)){
+            std::cerr << "File already contains a sticky" << std::endl;
+            return 1;
+        }
 
         try{
             add_sticky(db_connection, filePath , note);

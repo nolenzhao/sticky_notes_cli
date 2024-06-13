@@ -7,7 +7,7 @@ void display_help();
 
 std::string get_sticky(const std::string &filePath, sqlite3* db);
 
-void add_sticky(sqlite3* db, std::string& filePath, std::string note);
+void add_sticky(sqlite3* db, const std::string& filePath, std::string note);
 
 void edit_sticky(sqlite3* db, const std::string &filePath);
 
